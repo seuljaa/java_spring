@@ -43,5 +43,12 @@ public class UsrHomeController {
 		count = 0;
 		return "값이 0으로 초기화되었습니다.";
 	}
+	
+	@RequestMapping("usr/home/count/modify")
+	@ResponseBody
+	public String count_modify(int i) {
+		count = i;
+		return "값이" + i + "(으)로 수정되었습니다.";
+	}
 }
 
