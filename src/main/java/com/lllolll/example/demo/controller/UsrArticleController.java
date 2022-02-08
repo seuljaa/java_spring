@@ -49,6 +49,14 @@ public class UsrArticleController {
 		articles.remove(id-1);
 		return id + "번 게시글이 삭제되었습니다.";
 	}
+	
+	@RequestMapping("/usr/article/modify")
+	@ResponseBody
+	public String modify(int id, String title, String body) {
+		Article article = new Article(id, title, body);
+		articles.set(id-1, article);
+		return id + "번 게시글이 수정되었습니다.";
+	}
 }
 
 @Data
