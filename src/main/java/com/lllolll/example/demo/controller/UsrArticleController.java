@@ -57,6 +57,14 @@ public class UsrArticleController {
 		articles.set(id-1, article);
 		return id + "번 게시글이 수정되었습니다.";
 	}
+	
+	@RequestMapping("/usr/article/showArticle")
+	@ResponseBody
+	public Article showArticle(int id) {
+		Article article = new Article();
+		article = articles.get(id-1);
+		return article;
+	}
 }
 
 @Data
