@@ -36,5 +36,12 @@ public class UsrHomeController {
 		
 		return count++;
 	}
+	
+	@RequestMapping("/usr/home/count/back")
+	@ResponseBody
+	public String count_back() {
+		count = 0;
+		return "값이 0으로 초기화되었습니다.";
+	}
 }
 
