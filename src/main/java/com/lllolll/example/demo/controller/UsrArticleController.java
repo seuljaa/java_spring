@@ -46,6 +46,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String delete(int id) {
+		articles.remove(id-1);
 		return id + "번 게시글이 삭제되었습니다.";
 	}
 }
