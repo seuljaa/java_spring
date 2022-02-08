@@ -19,6 +19,11 @@ public class UsrArticleController {
 	public UsrArticleController() {
 		articles = new ArrayList<>();
 		id = 1;
+		
+		for (int num = 1; num < 11; num++) {
+			Article article = new Article(num, "제목"+num, "내용"+num);
+			articles.add(article);
+		}
 	}
 	
 	
@@ -35,8 +40,13 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/showArticles")
 	@ResponseBody
 	public List showArticles() {
-		
 		return articles;
+	}
+	
+	@RequestMapping("/usr/article/delete")
+	@ResponseBody
+	public String delete(int id) {
+		return id + "번 게시글이 삭제되었습니다.";
 	}
 }
 
