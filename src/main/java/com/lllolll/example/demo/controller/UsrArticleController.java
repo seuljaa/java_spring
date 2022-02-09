@@ -3,9 +3,12 @@ package com.lllolll.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.lllolll.example.demo.service.ArticleService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +16,16 @@ import lombok.NoArgsConstructor;
 
 @Controller
 public class UsrArticleController {
-	private int id;
+	
+	@Autowired
+	private ArticleService articleService;
+	
+	private int articlesLastId;
 	private List<Article> articles;
 	
 	public UsrArticleController() {
 		articles = new ArrayList<>();
-		id = 1;
+		articlesLastId = 0;
 		
 		for (int num = 1; num < 11; num++) {
 			Article article = new Article(num, "제목"+num, "내용"+num);
@@ -26,21 +33,28 @@ public class UsrArticleController {
 		}
 	}
 	
+	public Article writeArticle(String title, String body) {
+		int lastId = articles.size() + 1;
+		Article article = new Article(lastId, title, body);
+		articles.add(article);
+		articlesLastId = lastId;
+		return article;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body) {
-		Article article = new Article(id, title, body);
-		
-		articles.add(article);
-		
-		return id++ + "번 게시글이 추가되었습니다.";
-	}
-	
-	@RequestMapping("/usr/article/showArticles")
-	@ResponseBody
-	public List showArticles() {
-		return articles;
+		writeArticle(title, body);
+		int lastId = articles.size();
+		return lastId + "번 게시글이 추가되었습니다.";
 	}
 	
 	@RequestMapping("/usr/article/delete")
@@ -56,6 +70,12 @@ public class UsrArticleController {
 		Article article = new Article(id, title, body);
 		articles.set(id-1, article);
 		return id + "번 게시글이 수정되었습니다.";
+	}
+	
+	@RequestMapping("/usr/article/showArticles")
+	@ResponseBody
+	public List showArticles() {
+		return articles;
 	}
 	
 	@RequestMapping("/usr/article/showArticle")
