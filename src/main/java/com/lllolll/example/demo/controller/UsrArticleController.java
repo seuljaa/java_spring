@@ -41,6 +41,9 @@ public class UsrArticleController {
 		return article;
 	}
 	
+	public void deleteArticle(int id) {
+		articles.remove(id);
+	}
 	
 	
 	
@@ -53,14 +56,13 @@ public class UsrArticleController {
 	@ResponseBody
 	public String doAdd(String title, String body) {
 		writeArticle(title, body);
-		int lastId = articles.size();
-		return lastId + "번 게시글이 추가되었습니다.";
+		return articlesLastId + "번 게시글이 추가되었습니다.";
 	}
 	
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String delete(int id) {
-		articles.remove(id-1);
+		deleteArticle(id-1);
 		return id + "번 게시글이 삭제되었습니다.";
 	}
 	
