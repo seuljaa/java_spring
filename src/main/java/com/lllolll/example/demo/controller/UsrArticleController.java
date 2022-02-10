@@ -51,12 +51,6 @@ public class UsrArticleController {
 		return article;
 	}
 	
-	
-	
-	
-	
-	
-	
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body) {
