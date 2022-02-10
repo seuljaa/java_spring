@@ -20,8 +20,10 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body) {
-		articleService.writeArticle(title, body);
-		return articlesLastId + "번 게시글이 추가되었습니다.";
+		Article article = new Article();
+		article = articleService.writeArticle(title, body);
+		int id = article.getNum();
+		return id + "번 게시글이 추가되었습니다.";
 	}
 	
 	@RequestMapping("/usr/article/delete")
