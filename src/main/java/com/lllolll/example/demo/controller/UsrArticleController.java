@@ -22,7 +22,7 @@ public class UsrArticleController {
 	public String doAdd(String title, String body) {
 		Article article = new Article();
 		article = articleService.writeArticle(title, body);
-		int id = article.getNum();
+		int id = article.getId();
 		return id + "번 게시글이 추가되었습니다.";
 	}
 	

@@ -3,9 +3,11 @@ package com.lllolll.example.demo.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,13 @@ public interface ArticleRepository {
 	
 	public Article writeArticle(String title, String body);
 	
-	public void deleteArticle(int id);
+	@Delete("DELETE FROM article WHERE id= #{id}")
+	public void deleteArticle(@Param("id") int id);
 	
-	public Article modifyArticle(int id, String title, String body);
+	@Update("UPDATE article SET title= #{title}, `body`= #{body}, updateDate = NOW() WHERE id = #{id}")
+	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 	
-	@Select("select * from article where id= #{id}")
+	@Select("SELECT * FROM article WHERE id= #{id}")
 	public Article showArticle(@Param("id") int id);
 	
 	public List showArticles();
