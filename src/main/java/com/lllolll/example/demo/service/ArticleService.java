@@ -19,8 +19,8 @@ public class ArticleService {
 		this.articleRepository=articleRepository;
 	}
 	
-	public Article writeArticle(String title, String body) {
-		return articleRepository.writeArticle(title, body);
+	public void writeArticle(String title, String body) {
+		articleRepository.writeArticle(title, body);
 	}
 
 	public void deleteArticle(int i) {
@@ -29,7 +29,6 @@ public class ArticleService {
 
 	public void modifyArticle(int id, String title, String body) {
 		articleRepository.modifyArticle(id, title, body);
-		
 	}
 
 	public List showArticles() {
@@ -39,4 +38,9 @@ public class ArticleService {
 	public Article showArticle(int id) {
 		return articleRepository.showArticle(id);
 	}
+	
+	public int getLastId() {
+		return articleRepository.getLastId();
+	}
+
 }
