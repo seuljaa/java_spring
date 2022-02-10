@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.lllolll.example.demo.repository.ArticleRepository">
+	
+	<insert id="writeArticle">
+		INSERT INTO article
+		SET title= #{title},
+		`body`= #{body},
+		updateDate = NOW(),
+		regDate = NOW()
+	</insert>
+	
+	<select id="showArticles" resultType="Article">
+		SELECT *
+		FROM article
+		ORDER BY title DESC
+	</select>
+	
+	<select id="showArticle" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
+	</select>
+	
+	<select id="getLastId" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+	</select>
+	
+	<delete id="deleteArticle">
+		DELETE FROM article
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="modifyArticle">
+		UPDATE article
+		SET title= #{title},
+		`body`= #{body},
+		updateDate = NOW()
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
