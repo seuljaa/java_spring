@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MemberRepository {
-	public void join(String loginId, String loginPw, String name, String nickname, Integer cellphonNo, String email) {
+	public void join(String loginId, String loginPw, String name, String nickname, String cellphonNo, String email) {
 		
 	}
 }

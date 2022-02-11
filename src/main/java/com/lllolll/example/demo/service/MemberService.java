@@ -10,7 +10,7 @@ public class MemberService {
 	
 	//private MemberRepository memberRepository;
 	
-	public void join(String loginId, String loginPw, String name, String nickname, Integer cellphonNo, String email) {
+	public void join(String loginId, String loginPw, String name, String nickname, String cellphonNo, String email) {
 		//memberRepository.join(loginId, loginPw, name, nickname, cellphonNo, email);
 	}
 }

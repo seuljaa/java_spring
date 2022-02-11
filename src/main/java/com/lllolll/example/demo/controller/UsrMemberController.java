@@ -18,7 +18,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/join")
 	@ResponseBody
-	public String join(String loginId, String loginPw, String name, String nickname, Integer cellphonNo, String email) {
+	public String join(String loginId, String loginPw, String name, String nickname, String cellphonNo, String email) {
 		memberService.join(loginId, loginPw, name, nickname, cellphonNo, email);
 		return "성공";
 	}
