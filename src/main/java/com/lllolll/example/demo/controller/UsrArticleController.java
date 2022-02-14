@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lllolll.example.demo.service.ArticleService;
+import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Article;
+import com.lllolll.example.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
@@ -47,9 +49,13 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/showArticle")
 	@ResponseBody
-	public Article showArticle(int id) {
-		Article article = new Article();
-		article = articleService.showArticle(id);
-		return article;
+	public ResultData showArticle(int id) {
+		Article article = articleService.showArticle(id);
+		
+		if (article == null) {
+			
+			return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+		}
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id));
 	}
 }

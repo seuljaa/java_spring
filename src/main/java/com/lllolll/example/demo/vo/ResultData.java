@@ -23,6 +23,10 @@ public class ResultData {
 		
 		return rd;
 	}
+	
+	public static ResultData from(String resultCode, String msg) {
+		return from(resultCode, msg, null);
+	}
 
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");
