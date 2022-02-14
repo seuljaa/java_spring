@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lllolll.example.demo.service.MemberService;
 import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Member;
+import com.lllolll.example.demo.vo.ResultData;
 
 @Controller
 public class UsrMemberController {
@@ -19,44 +20,41 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/join")
 	@ResponseBody
-	public Object join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+	public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 		
 		if (Ut.empty(loginId)) {
-			return "loginId(을)를 입력해주세요.";
+			return ResultData.from("F-1","loginId(을)를 입력해주세요.");
 		}
 		
 		if (Ut.empty(loginPw)) {
-			return "loginPw(을)를 입력해주세요.";
+			return ResultData.from("F-2","loginPw(을)를 입력해주세요.");
 		}
 		
 		if (Ut.empty(name)) {
-			return "name(을)를 입력해주세요.";
+			return ResultData.from("F-3","name(을)를 입력해주세요.");
 		}
 		
 		if (Ut.empty(nickname)) {
-			return "nickname(을)를 입력해주세요.";
+			return ResultData.from("F-4","nickname(을)를 입력해주세요.");
 		}
 		
 		if (Ut.empty(cellphoneNo)) {
-			return "cellphoneNo(을)를 입력해주세요.";
+			return ResultData.from("F-5","cellphoneNo(을)를 입력해주세요.");
 		}
 		
 		if (Ut.empty(email)) {
-			return "email(을)를 입력해주세요.";
+			return ResultData.from("F-6","email(을)를 입력해주세요.");
 		}
 		
-		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email); 
+		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 		
-		if ( id == -1 ) {
-			return Ut.f("해당 로그인아이디(%s)는(은) 이미 사용중입니다.", loginId);
+		if ( joinRd.isFail() ) {
+			return joinRd;			
 		}
 		
-		if ( id == -2 ) {
-			return Ut.f("해당 nickname(%s)과(와) email(%s)(은)는 이미 사용중입니다.", nickname, email);
-		}
+		Member member = memberService.getMemberById((int)joinRd.getData1());
 		
-		Member member = memberService.getMemberById(id);
-		return member;
+		return ResultData.newData(joinRd, member);
 	}
 	
 }
