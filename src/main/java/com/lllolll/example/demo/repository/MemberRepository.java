@@ -17,11 +17,11 @@ public interface MemberRepository {
 			loginPw = #{loginPw},
 			`name` = #{name},
 			`nickname` = #{nickname},
-			cellphonNo = #{cellphonNo},
+			cellphoneNo = #{cellphoneNo},
 			email = #{email};
 									""")
 	void join(@Param("loginId") String loginId, @Param("loginPw") String loginPw, @Param("name") String name,
-			@Param("nickname") String nickname, @Param("cellphonNo") String cellphonNo, @Param("email") String email);
+			@Param("nickname") String nickname, @Param("cellphoneNo") String cellphonNo, @Param("email") String email);
 	
 	@Select("SELECT COUNT(*) FROM `member`")
 	int getLastId();

@@ -15,14 +15,14 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public int join(String loginId, String loginPw, String name, String nickname, String cellphonNo, String email) {
+	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 		Member oldMember = getMemberByLoginId(loginId);
 		
 		if ( oldMember != null) {
 			return -1;
 		}
 		
-		memberRepository.join(loginId, loginPw, name, nickname, cellphonNo, email);
+		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 		return memberRepository.getLastId();
 	}
 
