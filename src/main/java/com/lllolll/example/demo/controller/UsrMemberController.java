@@ -9,7 +9,6 @@ import com.lllolll.example.demo.service.MemberService;
 @Controller
 public class UsrMemberController {
 	
-	private int count;
 	private MemberService memberService;
 	
 	public UsrMemberController(MemberService memberService) {
