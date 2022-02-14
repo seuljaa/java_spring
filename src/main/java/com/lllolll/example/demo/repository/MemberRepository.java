@@ -31,4 +31,7 @@ public interface MemberRepository {
 
 	@Select("SELECT * FROM `member` AS M WHERE M.loginId = #{loginId}")
 	Member getMemberByLoginId(@Param("loginId") String loginId);
+
+	@Select("SELECT * FROM `member` AS M WHERE M.nickname = #{nickname} AND M.email = #{email}")	
+	Member getMemberByNicknameAndEmail(@Param("nickname") String nickname, @Param("email") String email);
 }
