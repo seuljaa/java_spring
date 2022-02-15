@@ -1,3 +1,4 @@
+DROP DATABASE demo;
 CREATE DATABASE demo;
 USE demo;
 
@@ -72,3 +73,10 @@ loginPw = 'user2',
 `nickname` = '사용자2',
 cellphoneNo = '01011112222',
 email = 'seuljaa940503@gmail.com';
+
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
+DESC article;
+
+UPDATE article
+SET memberId = 2
+WHERE memberId = 0;
