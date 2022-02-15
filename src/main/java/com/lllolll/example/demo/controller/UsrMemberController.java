@@ -70,7 +70,7 @@ public class UsrMemberController {
 		}
 		
 		if( islogined == true ) {
-			return ResultData.from("F-5", "이미 로그인되어있는 아이디 입니다.");
+			return ResultData.from("F-5", "이미 로그인 되어있습니다.");
 		}
 		
 		if (Ut.empty(loginId)) {

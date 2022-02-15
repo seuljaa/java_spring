@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lllolll.example.demo.service.ArticleService;
 import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Article;
+import com.lllolll.example.demo.vo.Member;
 import com.lllolll.example.demo.vo.ResultData;
 
 @Controller
@@ -19,24 +20,24 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(HttpSession httpSession, String title, String body) {
 
 		boolean islogined = false;
-		
+
 		int loginMemberId = 0;
 
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			islogined = true;
-			loginMemberId = (int)httpSession.getAttribute("loginedMemberId");
+			loginMemberId = (int) httpSession.getAttribute("loginedMemberId");
 		}
-		
-		if ( islogined == false) {
+
+		if (islogined == false) {
 			return ResultData.from("F-3", "로그인 후 이용해주세요.");
 		}
-		
 
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", "타이틀을 입력해주세요.");
@@ -57,8 +58,28 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public ResultData delete(int id) {
+	public ResultData delete(HttpSession httpSession, int id) {
+
 		Article article = articleService.showArticle(id);
+
+		boolean islogined = false;
+
+		int loginMemberId = 0;
+		int postMemberId = article.getMemberId();
+		
+		
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			islogined = true;
+			loginMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+
+		if (islogined == false) {
+			return ResultData.from("F-2", "로그인 후 이용해주세요.");
+		}
+		
+		if (loginMemberId != postMemberId) {
+			return ResultData.from("F-3", "본인이 작성한 게시글만 삭제할 수 있습니다.");
+		}
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
