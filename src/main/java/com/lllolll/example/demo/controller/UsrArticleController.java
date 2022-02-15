@@ -42,16 +42,29 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public String delete(int id) {
+	public ResultData delete(int id) {
+		Article article = articleService.showArticle(id-1);
+		
 		articleService.deleteArticle(id-1);
-		return id + "번 게시글이 삭제되었습니다.";
-	}
+		
+		if (article == null) {
+			ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+		} 
+		
+		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다.", id), id);
+				}
 	
 	@RequestMapping("/usr/article/modify")
 	@ResponseBody
-	public String modify(int id, String title, String body) {
-		articleService.modifyArticle(id, title, body);
-		return id + "번 게시글이 수정되었습니다.";
+	public ResultData modify(int id, String title, String body) {
+		Article article = articleService.showArticle(id-1);
+		
+		if (article == null) {
+			ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+		}
+		
+		articleService.modifyArticle(id-1, title, body);
+		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정했습니다.", id), id);
 	}
 	
 	@RequestMapping("/usr/article/showArticles")
