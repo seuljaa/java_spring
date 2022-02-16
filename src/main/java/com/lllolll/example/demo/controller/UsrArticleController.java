@@ -92,8 +92,28 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/modify")
 	@ResponseBody
-	public ResultData modify(int id, String title, String body) {
+	public ResultData modify(HttpSession httpSession, int id, String title, String body) {
+		
 		Article article = articleService.showArticle(id);
+		
+		boolean islogined = false;
+
+		int loginMemberId = 0;
+		int postMemberId = article.getMemberId();
+		
+		
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			islogined = true;
+			loginMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+		
+		if (islogined == false) {
+			return ResultData.from("F-2", "로그인 후 이용해주세요.");
+		}
+		
+		if (loginMemberId != postMemberId) {
+			return ResultData.from("F-3", "본인이 작성한 게시글만 수정할 수 있습니다.");
+		}
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
