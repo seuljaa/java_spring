@@ -53,7 +53,7 @@ public class UsrArticleController {
 
 		Article article = articleService.showArticle(id);
 
-		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
+		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
 	@RequestMapping("/usr/article/delete")
@@ -87,7 +87,7 @@ public class UsrArticleController {
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다.", id), "id", id);
 	}
 
 	@RequestMapping("/usr/article/modify")
@@ -95,6 +95,10 @@ public class UsrArticleController {
 	public ResultData modify(HttpSession httpSession, int id, String title, String body) {
 		
 		Article article = articleService.showArticle(id);
+		
+		if (article == null) {
+			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+		}
 		
 		boolean islogined = false;
 
@@ -115,12 +119,10 @@ public class UsrArticleController {
 			return ResultData.from("F-3", "본인이 작성한 게시글만 수정할 수 있습니다.");
 		}
 
-		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
-		}
+		
 
 		articleService.modifyArticle(id, title, body);
-		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정했습니다.", id), id);
+		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정했습니다.", id), "article", article);
 	}
 
 	@RequestMapping("/usr/article/showArticles")
@@ -128,7 +130,7 @@ public class UsrArticleController {
 	public ResultData showArticles() {
 		List articles = articleService.showArticles();
 
-		return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
+		return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
 	}
 
 	@RequestMapping("/usr/article/showArticle")
@@ -140,6 +142,6 @@ public class UsrArticleController {
 
 			return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
 		}
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
 	}
 }
