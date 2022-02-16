@@ -6,13 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lllolll.example.demo.service.ArticleService;
 import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Article;
-import com.lllolll.example.demo.vo.Member;
 import com.lllolll.example.demo.vo.ResultData;
 
 @Controller
@@ -125,12 +125,12 @@ public class UsrArticleController {
 		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정했습니다.", id), "article", article);
 	}
 
-	@RequestMapping("/usr/article/showArticles")
-	@ResponseBody
-	public ResultData showArticles() {
+	@RequestMapping("/usr/article/list")
+	public String showList(Model model) {
 		List articles = articleService.showArticles();
-
-		return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
+		
+		model.addAttribute("articles", articles);
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/showArticle")
