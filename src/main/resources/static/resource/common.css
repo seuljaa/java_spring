@@ -1,3 +1,4 @@
+/* 라이브러리 */
 @font-face {
   font-family: 'LotteMartDream';
   font-style: normal;
@@ -18,4 +19,15 @@
 }
 html > body {
  font-family: 'LotteMartDream', sans-serif;
+}
+
+/* 라이브러리 */
+.teable-box-typ-1 > table {
+ width:100%;
+}
+
+.teable-box-typ-1 > table th,
+.teable-box-typ-1 > table td {
+  border:1px solid black;
+  padding:10px;
 }
