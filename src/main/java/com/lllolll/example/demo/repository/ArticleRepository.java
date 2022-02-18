@@ -16,16 +16,24 @@ import com.lllolll.example.demo.vo.Article;
 
 @Mapper
 public interface ArticleRepository {
-	
+
 	public void writeArticle(@Param("title") String title, @Param("body") String body, @Param("memberId") int memberId);
-	
+
 	public void deleteArticle(@Param("id") int id);
-	
+
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
-	
+
 	public Article showArticle(@Param("id") int id);
-	
+
+	@Select("""
+			SELECT A.*,
+			M.nickname AS extra__writerName
+			FROM article AS A
+			LEFT JOIN MEMBER AS M
+			ON A.memberId = M.id
+			ORDER BY A.id DESC
+			""")
 	public List<Article> showArticles();
-	
+
 	public int getLastId();
 }

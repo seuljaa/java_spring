@@ -12,13 +12,7 @@
 		updateDate = NOW(),
 		regDate = NOW()
 	</insert>
-	
-	<select id="showArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY title DESC
-	</select>
-	
+
 	<select id="showArticle" resultType="Article">
 		SELECT *
 		FROM article
