@@ -23,6 +23,15 @@ public interface ArticleRepository {
 
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
+	@Select("""
+			SELECT A.*,
+			M.nickname AS extra__writerName
+			FROM article AS A
+			LEFT JOIN MEMBER AS M
+			ON A.memberId = M.id
+			WHERE 1
+			AND A.id = #{id}
+			""")
 	public Article showArticle(@Param("id") int id);
 
 	@Select("""

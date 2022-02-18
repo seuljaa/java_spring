@@ -12,12 +12,6 @@
 		updateDate = NOW(),
 		regDate = NOW()
 	</insert>
-
-	<select id="showArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE id = #{id}
-	</select>
 	
 	<select id="getLastId" resultType="int">
 		SELECT COUNT(*)
