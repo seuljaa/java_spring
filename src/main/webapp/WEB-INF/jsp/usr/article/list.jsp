@@ -10,6 +10,13 @@
   <div class="container mx-auto px-3">
     <div class="teable-box-typ-1">
       <table>
+      <colgroup>
+        <col width="50" />
+        <col width="150" />
+        <col width="150" />
+        <col width="150" />
+        <col />
+      </colgroup>
         <thead>
           <tr>
             <th>번호</th>
