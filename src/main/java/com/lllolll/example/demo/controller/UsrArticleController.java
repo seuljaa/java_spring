@@ -132,6 +132,14 @@ public class UsrArticleController {
 		model.addAttribute("articles", articles);
 		return "usr/article/list";
 	}
+	
+	@RequestMapping("/usr/article/detail")
+	public String showDetail(Model model, int id) {
+		Article article = articleService.showArticle(id);
+		
+		model.addAttribute("article", article);
+		return "usr/article/detail";
+	}
 
 	@RequestMapping("/usr/article/showArticle")
 	@ResponseBody
@@ -144,4 +152,5 @@ public class UsrArticleController {
 		}
 		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
 	}
+	
 }
