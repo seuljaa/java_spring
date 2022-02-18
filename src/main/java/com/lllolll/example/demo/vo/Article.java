@@ -16,4 +16,5 @@ public class Article{
 	String body;
 	
 	private String extra__writerName;
+	private boolean extra__actorCanDelete;
 }

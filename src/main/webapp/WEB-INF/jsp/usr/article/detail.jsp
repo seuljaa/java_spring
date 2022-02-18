@@ -10,9 +10,9 @@
   <div class="container mx-auto px-3">
     <div class="teable-box-typ-1">
       <table>
-      <colgroup>
-        <col width="200"/>
-      </colgroup>
+        <colgroup>
+          <col width="200" />
+        </colgroup>
         <tbody>
           <tr>
             <th>번호</th>
@@ -32,23 +32,25 @@
           </tr>
           <tr>
             <th>제목</th>
-            <td>
-              ${article.title}
-            </td>
+            <td>${article.title}</td>
           </tr>
           <tr>
             <th>내용</th>
-            <td>
-              ${article.body}
-            </td>
+            <td>${article.body}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="btns">
-      <button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-      <a class="btn-text-link" href="../article/modify?id=${article.id}">게시글 수정</a>
-      <a class="btn-text-link" onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;" href="../article/delete?id=${article.id}">게시글 삭제</a>
+      <button class="btn-text-link" type="button"
+        onclick="history.back();">뒤로가기</button>
+      <a class="btn-text-link" href="../article/modify?id=${article.id}">게시글
+        수정</a>
+      <c:if test="${article.extra__actorCanDelete}">
+        <a class="btn-text-link"
+          onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;"
+          href="../article/delete?id=${article.id}">게시글 삭제</a>
+      </c:if>
     </div>
   </div>
 </section>
