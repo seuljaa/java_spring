@@ -57,7 +57,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public ResultData delete(HttpSession httpSession, int id) {
+	public String delete(HttpSession httpSession, int id) {
 
 		boolean islogined = false;
 
@@ -73,20 +73,20 @@ public class UsrArticleController {
 		}
 
 		if (islogined == false) {
-			return ResultData.from("F-2", "로그인 후 이용해주세요.");
+			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		if (loginMemberId != postMemberId) {
-			return ResultData.from("F-3", "본인이 작성한 게시글만 삭제할 수 있습니다.");
+			return Ut.jsHistoryBack("본인이 작성한 게시글만 삭제할 수 있습니다.");
 		}
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+			return Ut.jsHistoryBack(Ut.f("%d번 게시글이 존재하지 않습니다.", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제했습니다.", id), "id", id);
+		return Ut.jsReplace(Ut.f("%d번 게시글을 삭제했습니다.", id), "../article/list");
 	}
 
 	@RequestMapping("/usr/article/modify")
