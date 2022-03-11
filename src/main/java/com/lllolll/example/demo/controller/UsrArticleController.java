@@ -26,7 +26,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(HttpServletRequest req, String title, String body) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
 			return ResultData.from("F-3", "로그인 후 이용해주세요.");
@@ -52,22 +52,22 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String delete(HttpServletRequest req, int id) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
+		
+		if (article == null) {
+			return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+		}
 
 		int postMemberId = article.getMemberId();
 
 		if (rq.isLogined() == false) {
 			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
 		}
-
+		
 		if (rq.getLoginedMemberId() != postMemberId) {
 			return Ut.jsHistoryBack("본인이 작성한 게시글만 삭제할 수 있습니다.");
-		}
-
-		if (article == null) {
-			return Ut.jsHistoryBack(Ut.f("%d번 게시글이 존재하지 않습니다.", id));
 		}
 
 		articleService.deleteArticle(id);
@@ -78,7 +78,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/modify")
 	@ResponseBody
 	public ResultData modify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
@@ -102,7 +102,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/list")
 	public String showList(HttpServletRequest req, Model model) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		List articles = articleService.showArticles(rq.getLoginedMemberId());
 
@@ -112,7 +112,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
@@ -123,7 +123,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/showArticle")
 	@ResponseBody
 	public ResultData showArticle(HttpServletRequest req, int id) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
