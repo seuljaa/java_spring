@@ -74,4 +74,10 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 	}
 
+	public String historyBackJsOnView(String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "common/js";
+	}
+
 }
