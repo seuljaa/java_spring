@@ -101,17 +101,17 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/logout")
 	@ResponseBody
-	public ResultData logout(HttpServletRequest req) {
+	public String logout(HttpServletRequest req) {
 		
 		Rq rq = (Rq)req.getAttribute("rq");
 		
 		if( rq.isLogined() == false ) {
-			return ResultData.from("F-5", "로그인 되어있지 않은 ID입니다.");
+			return Ut.jsHistoryBack("로그인 되어있지 않은 ID입니다.");
 		}
 		
 		rq.logout();
 		
-		return ResultData.from("S-1", "로그아웃 되었습니다."); 
+		return Ut.jsReplace("로그아웃 되었습니다.", "/"); 
 	}
 }
 
