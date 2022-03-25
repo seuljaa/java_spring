@@ -44,5 +44,5 @@ public interface ArticleRepository {
 			""")
 	public List<Article> showArticles();
 
-	public int getLastId();
+	public int getLastInsertId();
 }

@@ -13,9 +13,8 @@
 		regDate = NOW()
 	</insert>
 	
-	<select id="getLastId" resultType="int">
-		SELECT COUNT(*)
-		FROM article
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
 	</select>
 	
 	<delete id="deleteArticle">

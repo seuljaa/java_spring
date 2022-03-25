@@ -24,7 +24,7 @@ public class ArticleService {
 		
 		articleRepository.writeArticle(title, body, memberId);
 		
-		int id = articleRepository.getLastId();
+		int id = articleRepository.getLastInsertId();
 		
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), "id", id);
 	}
@@ -71,7 +71,7 @@ public class ArticleService {
 	}
 
 	public int getLastId() {
-		return articleRepository.getLastId();
+		return articleRepository.getLastInsertId();
 	}
 	
 	public ResultData actorCanModify(int actorId, Article article) {

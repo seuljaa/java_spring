@@ -25,19 +25,19 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public String doAdd(HttpServletRequest req, String title, String body) {
+	public String doAdd(HttpServletRequest req, String title, String body, String replaceUri) {
 		Rq rq = (Rq)req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
-			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+			return rq.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		if (Ut.empty(title)) {
-			return Ut.jsHistoryBack("제목을 입력해주세요.");
+			return rq.jsHistoryBack("제목을 입력해주세요.");
 		}
 
 		if (Ut.empty(body)) {
-			return Ut.jsHistoryBack("내용을 입력해주세요.");
+			return rq.jsHistoryBack("내용을 입력해주세요.");
 		}
 
 		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId());
@@ -45,8 +45,12 @@ public class UsrArticleController {
 		int id = (int) writeArticleRd.getData1();
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
+		
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../article/detail?id=%d", id);
+		}
 
-		return Ut.jsReplace("게시글이 생성되었습니다.", "../article/list");
+		return rq.jsReplace(Ut.f("%d번 게시글이 생성되었습니다.", id), replaceUri);
 	}
 
 	@RequestMapping("/usr/article/delete")
@@ -57,22 +61,22 @@ public class UsrArticleController {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 		
 		if (article == null) {
-			return Ut.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+			return rq.jsHistoryBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
 		}
 
 		int postMemberId = article.getMemberId();
 
 		if (rq.isLogined() == false) {
-			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+			return rq.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 		
 		if (rq.getLoginedMemberId() != postMemberId) {
-			return Ut.jsHistoryBack("본인이 작성한 게시글만 삭제할 수 있습니다.");
+			return rq.jsHistoryBack("본인이 작성한 게시글만 삭제할 수 있습니다.");
 		}
 
 		articleService.deleteArticle(id);
 
-		return Ut.jsReplace(Ut.f("%d번 게시글을 삭제했습니다.", id), "../article/list");
+		return rq.jsReplace(Ut.f("%d번 게시글을 삭제했습니다.", id), "../article/list");
 	}
 
 	@RequestMapping("/usr/article/modify")
@@ -105,21 +109,21 @@ public class UsrArticleController {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return Ut.jsHistoryBack(Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+			return rq.jsHistoryBack(Ut.f("%d번 게시글이 존재하지 않습니다.", id));
 		}
 
 		int postMemberId = article.getMemberId();
 
 		if (rq.isLogined() == false) {
-			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
+			return rq.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		if (rq.getLoginedMemberId() != postMemberId) {
-			return Ut.jsHistoryBack("본인이 작성한 게시글만 수정할 수 있습니다.");
+			return rq.jsHistoryBack("본인이 작성한 게시글만 수정할 수 있습니다.");
 		}
 
 		articleService.modifyArticle(id, title, body);
-		return Ut.jsReplace(Ut.f("%d번 게시글을 수정했습니다.", id), Ut.f("../article/detail?id=%d", id));
+		return rq.jsReplace(Ut.f("%d번 게시글을 수정했습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
 
 	@RequestMapping("/usr/article/list")
