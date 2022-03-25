@@ -8,7 +8,8 @@
 
 <section class="mt-5">
   <div class="container mx-auto px-3">
-    <div class="teable-box-typ-1">
+    <form class="teable-box-typ-1" method="POST" action="../article/doModify">
+      <input type="hidden" name="id" value="${article.id}"/>
       <table>
         <colgroup>
           <col width="200" />
@@ -32,15 +33,26 @@
           </tr>
           <tr>
             <th>제목</th>
-            <td>${article.title}</td>
+            <td>
+            <input class="w-96" name="title" type="text" placeholder="제목" value="${article.title}"/>
+            </td>
           </tr>
           <tr>
             <th>내용</th>
-            <td>${article.body}</td>
+            <td>
+              <textarea class="w-full" name="body" rows="10">${article.body}</textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>수정</th>
+            <td>
+              <input type="submit" value="수정"/>
+              <button type="button" onclick="history.back();">뒤로가기</button>
+            </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </form>
     <div class="btns">
       <button class="btn-text-link" type="button"
         onclick="history.back();">뒤로가기</button>
