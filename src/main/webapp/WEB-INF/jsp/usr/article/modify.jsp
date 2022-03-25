@@ -17,49 +17,58 @@
         <tbody>
           <tr>
             <th>번호</th>
-            <td>${article.id}</td>
+            <td>
+              <div class="badge badge-primary">${article.id}</div>
+            </td>
           </tr>
           <tr>
             <th>작성날짜</th>
-            <td>${article.regDate.substring(2, 16)}</td>
+            <td>
+              <div class="badge badge-outline">${article.regDateForPrint}</div>
+            </td>
           </tr>
           <tr>
             <th>수정날짜</th>
-            <td>${article.updateDate.substring(2, 16)}</td>
+            <td>
+              <div class="badge badge-outline">${article.updateDateForPrint}</div>
+            </td>
           </tr>
           <tr>
             <th>작성자</th>
-            <td>${article.extra__writerName}</td>
+            <td>
+              <div class="badge">${article.extra__writerName}</div>
+            </td>
           </tr>
           <tr>
             <th>제목</th>
             <td>
-            <input class="w-96" name="title" type="text" placeholder="제목" value="${article.title}"/>
+            <input class="w-96 input input-bordered" name="title" type="text" placeholder="제목" value="${article.title}"/>
             </td>
           </tr>
           <tr>
             <th>내용</th>
             <td>
-              <textarea class="w-full" name="body" rows="10">${article.body}</textarea>
+              <textarea class="textarea textarea-bordered w-full" name="body" rows="10">${article.body}</textarea>
             </td>
           </tr>
           <tr>
             <th>수정</th>
             <td>
-              <input type="submit" value="수정"/>
-              <button type="button" onclick="history.back();">뒤로가기</button>
+              <button class="btn btn-active btn-primary btn-sm" type="submit" >수정</button>
+              <button class="btn btn-active btn-ghost btn-sm" type="button" onclick="history.back();">뒤로가기</button>
             </td>
           </tr>
         </tbody>
       </table>
     </form>
     <div class="btns">
-      <button class="btn-text-link" type="button"
+      <button class="btn btn-link" type="button"
         onclick="history.back();">뒤로가기</button>
-      <a class="btn-text-link" href="../article/modify?id=${article.id}">게시글
-        수정</a>
+      <c:if test="${article.extra__actorCanModify}">
+        <a class="btn btn-link" href="../article/modify?id=${article.id}">게시글수정</a>
+      </c:if>
       <c:if test="${article.extra__actorCanDelete}">
-        <a class="btn-text-link"
+        <a class="btn btn-link"
           onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;"
           href="../article/delete?id=${article.id}">게시글 삭제</a>
       </c:if>

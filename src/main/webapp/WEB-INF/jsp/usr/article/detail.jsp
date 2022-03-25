@@ -16,19 +16,27 @@
         <tbody>
           <tr>
             <th>번호</th>
-            <td>${article.id}</td>
+            <td>
+              <div class="badge badge-primary">${article.id}</div>
+            </td>
           </tr>
           <tr>
             <th>작성날짜</th>
-            <td>${article.regDate.substring(2, 16)}</td>
+            <td>
+              <div class="badge badge-outline">${article.regDateForPrint}</div>
+            </td>
           </tr>
           <tr>
             <th>수정날짜</th>
-            <td>${article.updateDate.substring(2, 16)}</td>
+            <td>
+              <div class="badge badge-outline">${article.updateDateForPrint}</div>
+            </td>
           </tr>
           <tr>
             <th>작성자</th>
-            <td>${article.extra__writerName}</td>
+            <td>
+              <div class="badge">${article.extra__writerName}</div>
+            </td>
           </tr>
           <tr>
             <th>제목</th>
@@ -42,12 +50,12 @@
       </table>
     </div>
     <div class="btns">
-      <button class="btn-text-link" type="button"
-        onclick="history.back();">뒤로가기</button>
-      <a class="btn-text-link" href="../article/modify?id=${article.id}">게시글
-        수정</a>
+      <button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
+      <c:if test="${article.extra__actorCanModify}">
+        <a class="btn btn-link" href="../article/modify?id=${article.id}">게시글수정</a>
+      </c:if>
       <c:if test="${article.extra__actorCanDelete}">
-        <a class="btn-text-link"
+        <a class="btn btn-link"
           onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;"
           href="../article/delete?id=${article.id}">게시글 삭제</a>
       </c:if>
