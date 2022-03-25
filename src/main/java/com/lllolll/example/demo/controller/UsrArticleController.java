@@ -99,27 +99,27 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData modify(HttpServletRequest req, int id, String title, String body) {
+	public String modify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq)req.getAttribute("rq");
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글이 존재하지 않습니다.", id));
+			return Ut.jsHistoryBack(Ut.f("%d번 게시글이 존재하지 않습니다.", id));
 		}
 
 		int postMemberId = article.getMemberId();
 
 		if (rq.isLogined() == false) {
-			return ResultData.from("F-2", "로그인 후 이용해주세요.");
+			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		if (rq.getLoginedMemberId() != postMemberId) {
-			return ResultData.from("F-3", "본인이 작성한 게시글만 수정할 수 있습니다.");
+			return Ut.jsHistoryBack("본인이 작성한 게시글만 수정할 수 있습니다.");
 		}
 
 		articleService.modifyArticle(id, title, body);
-		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정했습니다.", id), "article", article);
+		return Ut.jsReplace(Ut.f("%d번 게시글을 수정했습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
 
 	@RequestMapping("/usr/article/list")
