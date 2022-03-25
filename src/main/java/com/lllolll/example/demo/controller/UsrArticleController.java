@@ -25,19 +25,19 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(HttpServletRequest req, String title, String body) {
+	public String doAdd(HttpServletRequest req, String title, String body) {
 		Rq rq = (Rq)req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
-			return ResultData.from("F-3", "로그인 후 이용해주세요.");
+			return Ut.jsHistoryBack("로그인 후 이용해주세요.");
 		}
 
 		if (Ut.empty(title)) {
-			return ResultData.from("F-1", "타이틀을 입력해주세요.");
+			return Ut.jsHistoryBack("제목을 입력해주세요.");
 		}
 
 		if (Ut.empty(body)) {
-			return ResultData.from("F-1", "바디를 입력해주세요.");
+			return Ut.jsHistoryBack("내용을 입력해주세요.");
 		}
 
 		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId());
@@ -46,7 +46,7 @@ public class UsrArticleController {
 
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
-		return ResultData.newData(writeArticleRd, "article", article);
+		return Ut.jsReplace("게시글이 생성되었습니다.", "../article/list");
 	}
 
 	@RequestMapping("/usr/article/delete")
@@ -154,6 +154,11 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id));
 		}
 		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
+	}
+	
+	@RequestMapping("/usr/article/write")
+	public String showWrite(HttpServletRequest req, Model model) {
+		return "usr/article/write";
 	}
 
 }
