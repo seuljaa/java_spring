@@ -126,3 +126,15 @@ WHERE Id IN (1, 2);
 UPDATE article
 SET boardId = 2
 WHERE Id IN (3);
+
+# 게시물개수 늘리기
+/*
+insert into article
+(
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+select now(), now(), floor(rand() * 2) + 1, floor(rand() * 2 ) + 1, concat('제목_', rand()), CONCAT('내용_', RAND())
+from article;
+
+select count(*) from article;
+*/
