@@ -41,8 +41,8 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 수정되었습니다.", id), "article", article);
 	}
 
-	public List showArticles(int actorId) {
-		List<Article> articles =  articleRepository.showArticles();
+	public List showArticles(int actorId, int boardId) {
+		List<Article> articles =  articleRepository.showArticles(boardId);
 		
 		for ( Article article : articles ) {
 			updateForPrintData(actorId, article);

@@ -141,10 +141,8 @@ public class UsrArticleController {
 		if ( board == null) {
 			return rq.historyBackJsOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
 		}
-		
-		
 
-		List articles = articleService.showArticles(rq.getLoginedMemberId());
+		List articles = articleService.showArticles(rq.getLoginedMemberId(), boardId);
 
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
