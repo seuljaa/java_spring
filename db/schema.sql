@@ -43,6 +43,16 @@ delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴�
 delDate DATETIME COMMENT '탈퇴날짜'
 );
 
+CREATE TABLE `board`(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+`code` CHAR(50) NOT NULL UNIQUE COMMENT 'noice(공지사항), free1(자유게시판1), free2(자유게시판2)',
+`name` CHAR(50) NOT NULL UNIQUE COMMENT '게시판 이름',
+delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부(0=탈퇴전, 1=탈퇴)',
+delDate DATETIME COMMENT '탈퇴날짜'
+);
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -80,3 +90,39 @@ DESC article;
 UPDATE article
 SET memberId = 2
 WHERE memberId = 0;
+
+SELECT A.*,
+M.nickname AS extra__writerName
+FROM article AS A
+LEFT JOIN MEMBER AS M
+ON A.memberId = M.id
+ORDER BY A.id DESC
+
+SELECT *
+FROM board;
+
+SELECT *
+FROM article;
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'notice',
+`name` = '공지사항';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free1',
+`name` = '자유게시판';
+
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
+DESC article;
+
+UPDATE article
+SET boardId = 1
+WHERE Id IN (1, 2);
+
+UPDATE article
+SET boardId = 2
+WHERE Id IN (3);
