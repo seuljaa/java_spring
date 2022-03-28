@@ -12,16 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lllolll.example.demo.service.ArticleService;
+import com.lllolll.example.demo.service.BoardService;
 import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Article;
+import com.lllolll.example.demo.vo.Board;
 import com.lllolll.example.demo.vo.ResultData;
 import com.lllolll.example.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
 
-	@Autowired
 	private ArticleService articleService;
+	private BoardService boardService;
+	
+	public UsrArticleController(ArticleService articleService, BoardService boardService) {
+		this.articleService = articleService;
+		this.boardService = boardService;
+	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
@@ -127,11 +134,14 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model) {
+	public String showList(HttpServletRequest req, Model model, int boardId) {
+		Board board = boardService.getBoardById(boardId);
+		
 		Rq rq = (Rq)req.getAttribute("rq");
 
 		List articles = articleService.showArticles(rq.getLoginedMemberId());
 
+		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
 		return "usr/article/list";
 	}
