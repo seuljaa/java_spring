@@ -141,10 +141,12 @@ public class UsrArticleController {
 		if ( board == null) {
 			return rq.historyBackJsOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
 		}
-
+		
+		int articlesCount = articleService.showArticlesCount(boardId);
 		List articles = articleService.showArticles(rq.getLoginedMemberId(), boardId);
 
 		model.addAttribute("board", board);
+		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
 		return "usr/article/list";
 	}

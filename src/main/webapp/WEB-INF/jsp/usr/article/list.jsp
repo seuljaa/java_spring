@@ -8,6 +8,9 @@
 
 <section class="mt-5">
   <div class="container mx-auto px-3">
+    <div>
+      게시물 개수 : <div class="badge badge-primary">${articlesCount}</div>개
+    </div>
     <div class="teable-box-typ-1">
       <table>
       <colgroup>
