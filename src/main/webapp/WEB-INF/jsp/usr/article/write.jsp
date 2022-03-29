@@ -21,6 +21,15 @@
             </td>
           </tr>
           <tr>
+            <th>게시판선택</th>
+            <td>
+              <select class="select select-bordered" name="boardId">
+                <option value="1">공지사항</option>
+                <option value="2">자유게시판</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
             <th>제목</th>
             <td>
             <input class="w-96 input input-bordered" name="title" type="text" placeholder="제목"/>

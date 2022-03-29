@@ -34,7 +34,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public String doAdd(String title, String body, String replaceUri) {
+	public String doAdd(int boardId, String title, String body, String replaceUri) {
 		if (rq.isLogined() == false) {
 			return rq.jsHistoryBack("로그인 후 이용해주세요.");
 		}
@@ -47,7 +47,7 @@ public class UsrArticleController {
 			return rq.jsHistoryBack("내용을 입력해주세요.");
 		}
 
-		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId());
+		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 
 		int id = (int) writeArticleRd.getData1();
 
