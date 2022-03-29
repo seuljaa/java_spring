@@ -24,17 +24,17 @@ public class UsrArticleController {
 
 	private ArticleService articleService;
 	private BoardService boardService;
+	private Rq rq;
 	
-	public UsrArticleController(ArticleService articleService, BoardService boardService) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
+		this.rq = rq;
 	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public String doAdd(HttpServletRequest req, String title, String body, String replaceUri) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
+	public String doAdd(String title, String body, String replaceUri) {
 		if (rq.isLogined() == false) {
 			return rq.jsHistoryBack("로그인 후 이용해주세요.");
 		}
@@ -62,9 +62,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public String delete(HttpServletRequest req, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
+	public String delete(int id) {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 		
 		if (article == null) {
@@ -87,9 +85,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modify")
-	public String showModify(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String showModify(Model model, int id) {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 		
 		if (article == null) {
@@ -110,9 +106,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String modify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
+	public String modify(int id, String title, String body) {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
@@ -134,8 +128,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model, int boardId) {
-		Rq rq = (Rq)req.getAttribute("rq");
+	public String showList(Model model, int boardId) {
 		Board board = boardService.getBoardById(boardId);
 		
 		if ( board == null) {
@@ -152,9 +145,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
+	public String showDetail(Model model, int id) {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
 		model.addAttribute("article", article);
@@ -163,9 +154,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/showArticle")
 	@ResponseBody
-	public ResultData showArticle(HttpServletRequest req, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
+	public ResultData showArticle(int id) {
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {

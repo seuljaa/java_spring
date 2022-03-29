@@ -18,9 +18,11 @@ import com.lllolll.example.demo.vo.Rq;
 public class UsrMemberController {
 	
 	private MemberService memberService;
+	private Rq rq;
 	
-	public UsrMemberController(MemberService memberService) {
+	public UsrMemberController(MemberService memberService, Rq rq) {
 		this.memberService = memberService;
+		this.rq = rq;
 	}
 	
 	@RequestMapping("/usr/member/join")
@@ -69,9 +71,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String DologIn(HttpServletRequest req, String loginId, String loginPw) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String DologIn(String loginId, String loginPw) {
 		if( rq.isLogined() ) {
 			return Ut.jsHistoryBack("이미 로그인 되어있습니다.");
 		}
@@ -101,10 +101,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/logout")
 	@ResponseBody
-	public String logout(HttpServletRequest req) {
-		
-		Rq rq = (Rq)req.getAttribute("rq");
-		
+	public String logout() {
 		if( rq.isLogined() == false ) {
 			return Ut.jsHistoryBack("로그인 되어있지 않은 ID입니다.");
 		}
