@@ -101,4 +101,8 @@ public class Rq {
 		return Ut.jsReplace(msg, uri);
 	}
 
+	public void initOnBeforeActionInterceptor() {
+		
+	}
+
 }
