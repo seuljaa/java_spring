@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lllolll.example.demo.service.ArticleService;
@@ -128,7 +129,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId, int page) {
 		Board board = boardService.getBoardById(boardId);
 		
 		if ( board == null) {
@@ -136,7 +137,9 @@ public class UsrArticleController {
 		}
 		
 		int articlesCount = articleService.showArticlesCount(boardId);
-		List articles = articleService.showArticles(rq.getLoginedMemberId(), boardId);
+		
+		int itemsCountInPage = 10;
+		List articles = articleService.showArticles(rq.getLoginedMemberId(), boardId, page, itemsCountInPage);
 
 		model.addAttribute("board", board);
 		model.addAttribute("articlesCount", articlesCount);

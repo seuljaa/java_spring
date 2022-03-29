@@ -46,9 +46,12 @@ public interface ArticleRepository {
 				AND A.boardId = #{boardId}
 			</if>
 			ORDER BY A.id DESC
+			<if test="limitStart != 0 or limitTake != 0">
+				LIMIT #{limitStart}, #{limitTake}
+			</if> 
 			</script>
 			""")
-	public List<Article> showArticles(@Param("boardId") int boardId);
+	public List<Article> showArticles(@Param("boardId") int boardId, int limitStart, int limitTake);
 
 	public int getLastInsertId();
 	
