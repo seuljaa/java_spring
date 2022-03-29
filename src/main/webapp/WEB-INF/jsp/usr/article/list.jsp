@@ -45,9 +45,14 @@
       </table>
     </div>
     <div class="btn-group justify-center">
-      <c:forEach begin="1" end="${pageCount}" var="i">
+      <c:set var="pageMenuArmLen" value="9"/>
+      <c:set var="startPage" value="${page - pageMenuArmLen >= 1 ? page - pageMenuArmLen : 1}"/>
+      <c:set var="endPage" value="${page + pageMenuArmLen <= pageCount ? page + pageMenuArmLen : pageCount}"/>
+      <a class="btn btn-sm" href="?page=1">처음으로</a>
+      <c:forEach begin="${startPage}" end="${endPage}" var="i">
         <a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="?page=${i}">${i}</a>
       </c:forEach>
+      <a class="btn btn-sm" href="?page=${pageCount}">마지막으로</a>
     </div>
     
   </div>
