@@ -11,8 +11,8 @@
     <div>
       게시물 개수 : <div class="badge badge-primary">${articlesCount}</div>개
     </div>
-    <div class="teable-box-typ-1">
-      <table>
+    <div class="">
+      <table class="table table-fixed w-full ">
       <colgroup>
         <col width="50" />
         <col width="150" />
@@ -36,8 +36,10 @@
               <td>${article.regDate.substring(2, 16)}</td>
               <td>${article.updateDate.substring(2, 16)}</td>
               <td>${article.extra__writerName}</td>
-              <td>
-                <a class="btn-text-link"  href="../article/detail?id=${article.id}">${article.title}</a>
+              <td class="truncate">
+                <a class="btn-text-link"  href="../article/detail?id=${article.id}">
+                  ${article.title}
+                </a>
               </td>
             </tr>
           </c:forEach>
@@ -49,9 +51,11 @@
       <c:set var="startPage" value="${page - pageMenuArmLen >= 1 ? page - pageMenuArmLen : 1}"/>
       <c:set var="endPage" value="${page + pageMenuArmLen <= pageCount ? page + pageMenuArmLen : pageCount}"/>
       <a class="btn btn-sm" href="?page=1&boardId=${boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}">처음으로</a>
+      <a class="btn btn-sm" href="?page=${page-1}&boardId=${boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}">이전</a>
       <c:forEach begin="${startPage}" end="${endPage}" var="i">
         <a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="?page=${i}&boardId=${boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}">${i}</a>
       </c:forEach>
+      <a class="btn btn-sm" href="?page=${page+1}&boardId=${boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}">다음</a>
       <a class="btn btn-sm" href="?page=${pageCount}&boardId=${boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}">마지막으로</a>
     </div>
     
