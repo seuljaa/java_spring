@@ -157,6 +157,10 @@ public class UsrArticleController {
 		articleService.increaseHitCount(id);
 		
 		Article article = articleService.showArticle(rq.getLoginedMemberId(), id);
+		if (article == null) {
+
+			return rq.historyBackJsOnView("게시글이 존재하지않습니다.");
+		}
 
 		model.addAttribute("article", article);
 		return "usr/article/detail";
