@@ -19,6 +19,7 @@
 
 <!-- 사이트공통 css -->
 <link rel="stylesheet" href="/resource/common.css" />
+<!-- 사이트공통 js -->
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
