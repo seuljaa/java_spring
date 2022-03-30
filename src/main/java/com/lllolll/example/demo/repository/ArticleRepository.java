@@ -100,4 +100,14 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int showArticlesCount(@Param("boardId") int boardId, String searchKeywordType, String searchKeyword);
+	
+	@Update("""
+			<script>
+			UPDATE article 
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int increaseHitCount(int id);
+
 }

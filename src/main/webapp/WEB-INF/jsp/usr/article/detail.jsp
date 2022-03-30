@@ -33,6 +33,12 @@
             </td>
           </tr>
           <tr>
+            <th>조회수</th>
+            <td>
+              <div>${article.hitCount}</div>
+            </td>
+          </tr>
+          <tr>
             <th>작성자</th>
             <td>
               <div class="badge">${article.extra__writerName}</div>

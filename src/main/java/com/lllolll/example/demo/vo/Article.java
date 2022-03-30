@@ -14,6 +14,7 @@ public class Article{
 	int memberId;
 	String title;
 	String body;
+	int hitCount;
 	
 	private String extra__writerName;
 	private boolean extra__actorCanDelete;

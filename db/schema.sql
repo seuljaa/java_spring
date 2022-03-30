@@ -138,3 +138,6 @@ from article;
 
 select count(*) from article;
 */
+
+ALTER TABLE article
+ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;

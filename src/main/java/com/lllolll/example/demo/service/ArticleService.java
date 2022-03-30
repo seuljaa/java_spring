@@ -9,15 +9,19 @@ import com.lllolll.example.demo.repository.ArticleRepository;
 import com.lllolll.example.demo.util.Ut;
 import com.lllolll.example.demo.vo.Article;
 import com.lllolll.example.demo.vo.ResultData;
+import com.lllolll.example.demo.vo.Rq;
 
 @Service
 public class ArticleService {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+	private Rq rq;
 
-	public ArticleService(ArticleRepository articleRepository) {
+	public ArticleService(ArticleRepository articleRepository, Rq rq) {
 		this.articleRepository=articleRepository;
+		this.rq = rq;
+		
 	}
 	
 	public ResultData writeArticle(String title, String body, int memberId, int boardId) {
@@ -103,6 +107,15 @@ public class ArticleService {
 
 	public int showArticlesCount(int boardId, String searchKeywordType, String searchKeyword) {
 		return articleRepository.showArticlesCount(boardId, searchKeywordType, searchKeyword);
+	}
+
+	public int increaseHitCount(int id) {
+		int affectedRowsCount = articleRepository.increaseHitCount(id);
+		if ( affectedRowsCount == 0 ) {
+			rq.jsHistoryBack("해당 게시글이 존재하지 않습니다.");
+		}
+		return affectedRowsCount;
+		
 	}
 
 }
