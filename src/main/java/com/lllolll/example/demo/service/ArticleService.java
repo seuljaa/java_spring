@@ -101,8 +101,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "게시물 삭제가 가능합니다.");
 	}
 
-	public int showArticlesCount(int boardId) {
-		return articleRepository.showArticlesCount(boardId);
+	public int showArticlesCount(int boardId, String searchKeywordType, String searchKeyword) {
+		return articleRepository.showArticlesCount(boardId, searchKeywordType, searchKeyword);
 	}
 
 }
